@@ -1,283 +1,60 @@
-/* =========================================
-   UHS STEM ACADEMY - MAIN STYLESHEET
-   ========================================= */
+/* ========================================================
+   UHS STEM ACADEMY - CONSOLIDATED STYLESHEET
+   ======================================================== */
 
-/* --- 1. Global Variables --- */
 :root {
-  --primary-red: #D31145; 
-  --dark-bg: #000000;     
-  --darker-bg: #111111;   
-  --silver: #C0C0C0;      
-  --text-light: #F5F5F5;  
+  --primary-red: #D31145;
+  --dark-bg: #000000;
+  --darker-bg: #111111;
+  --silver: #C0C0C0;
+  --text-light: #F5F5F5;
   --white: #FFFFFF;
 }
 
-/* --- 2. Base Resets --- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
-body {
-  background-color: var(--darker-bg);
-  color: var(--text-light);
-  line-height: 1.6;
-}
+body { background-color: var(--darker-bg); color: var(--text-light); line-height: 1.6; }
 
-h1, h2, h3 {
-  color: var(--white);
-  margin-bottom: 20px;
-}
-
-p {
-  margin-bottom: 15px;
-}
-
-/* --- 3. Bar Style Header --- */
+/* Header & Nav */
 header {
   background-color: var(--dark-bg);
   border-bottom: 3px solid var(--primary-red);
-  height: 100px; /* Gives the logo room to breathe */
+  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
 }
 
-.logo {
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
+.logo { height: 100%; display: flex; align-items: center; }
+.logo a { height: 80%; display: block; }
+.logo img { height: 100%; width: auto; object-fit: contain; }
 
-.logo a {
-  height: 80%; /* Keeps the logo from touching the edges of the bar */
-  display: block;
-}
+nav ul { list-style: none; display: flex; gap: 30px; }
+nav ul li a { color: var(--silver); text-decoration: none; font-weight: 600; font-size: 1.1rem; text-transform: uppercase; transition: color 0.3s ease; }
+nav ul li a:hover { color: var(--white); }
 
-.logo img {
-  height: 100%;
-  width: auto;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
+/* Main Content */
+main { padding: 40px 5%; max-width: 1400px; margin: 0 auto; min-height: 80vh; }
 
-.logo img:hover {
-  transform: scale(1.05);
-}
+/* Calendar Section (STRICTLY SCOPED) */
+#calendar-section { margin-top: 60px; }
+#calendar-section .calendar-flex-container { display: flex; flex-direction: row; gap: 20px; width: 100%; margin-top: 20px; }
+#calendar-section .calendar-wrapper { flex: 1; min-width: 0; background-color: var(--dark-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+#calendar-section .dark-calendar { filter: invert(0.9) hue-rotate(180deg); background-color: #ffffff; border: none; display: block; width: 100%; height: 600px; }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 30px;
-}
+/* UI Elements */
+.form-container { background-color: var(--white); padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+.btn { display: inline-block; background-color: var(--primary-red); color: var(--white); padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
 
-nav ul li a {
-  color: var(--silver);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  position: relative;
-  padding-bottom: 5px;
-  transition: color 0.3s ease;
-}
+/* Footer */
+footer { text-align: center; padding: 30px 20px; background-color: var(--dark-bg); color: var(--silver); border-top: 1px solid #333; }
 
-/* Animated Red Underline Effect */
-nav ul li a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 3px;
-  bottom: 0;
-  left: 0;
-  background-color: var(--primary-red);
-  transition: width 0.3s ease;
-}
-
-nav ul li a:hover {
-  color: var(--white);
-}
-
-nav ul li a:hover::after {
-  width: 100%;
-}
-
-/* --- 4. Main Content Area --- */
-main {
-  padding: 40px 5%;
-  max-width: 1200px;
-  margin: 0 auto; 
-  min-height: 80vh;
-}
-
-main a:hover {
-  text-decoration: underline !important;
-  opacity: 0.9;
-}
-
-/* --- 5. Buttons --- */
-.btn {
-  display: inline-block;
-  background-color: var(--primary-red);
-  color: var(--white);
-  padding: 10px 20px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.btn:hover {
-  background-color: #a80d35;
-  transform: translateY(-2px); 
-  text-decoration: none !important;
-}
-
-/* --- 6. Google Form Container --- */
-.form-container {
-  background-color: var(--white);
-  padding: 20px;
-  border-radius: 8px;
-  margin-top: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
-}
-
-iframe {
-  width: 100%;
-  height: 600px;
-  border: none;
-}
-
-/* --- 7. Footer --- */
-footer {
-  text-align: center;
-  padding: 30px 20px;
-  background-color: var(--dark-bg);
-  color: var(--silver);
-  border-top: 1px solid #333;
-}
-
-footer a {
-  transition: opacity 0.3s ease;
-}
-
-footer a:hover {
-  text-decoration: underline !important;
-  opacity: 0.8;
-}
-
-/* --- Dark Mode Calendar Hack --- */
-.calendar-wrapper {
-  margin-top: 20px;
-  border-radius: 8px;
-  overflow: hidden; /* Keeps the edges neat and matches the form border radius */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* Re-adds the dark shadow safely */
-  background-color: var(--dark-bg);
-}
-
-.dark-calendar {
-  filter: invert(0.9) hue-rotate(180deg);
-  background-color: #ffffff; /* Forces a solid white base before inversion so it becomes uniformly dark */
-  border: none;
-  display: block; /* Removes any tiny default gaps underneath the iframe */
-}
-
-/* =========================================
-   8. MOBILE RESPONSIVENESS
-   ========================================= */
-
-@media (max-width: 768px) {
-  /* Stack the header elements */
-  header {
-    flex-direction: column;
-    height: auto;
-    padding: 20px 5%;
-    gap: 15px; /* Adds space between the logo and the links */
-  }
-
-  /* Adjust the logo size for smaller screens */
-  .logo {
-    height: auto;
-  }
-
-  .logo a {
-    height: auto;
-  }
-
-  .logo img {
-    height: 70px; /* Slightly smaller so it doesn't take up the whole screen */
-  }
-
-  /* Center and wrap the navigation links */
-  nav ul {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  nav ul li a {
-    font-size: 1rem; /* Slightly smaller text */
-  }
-
-  /* Adjust main content spacing */
-  main {
-    padding: 30px 5%;
-  }
-
-  /* Prevent the calendar from being too tall on small screens */
-  .dark-calendar {
-    height: 450px; 
-  }
-
-  /* =========================================
-   8. MOBILE RESPONSIVENESS
-   ========================================= */
-
-@media (max-width: 768px) {
-  /* Stack the header elements */
-  header {
-    flex-direction: column;
-    height: auto;
-    padding: 20px 5%;
-    gap: 15px; /* Adds space between the logo and the links */
-  }
-
-  /* Adjust the logo size for smaller screens */
-  .logo {
-    height: auto;
-  }
-
-  .logo a {
-    height: auto;
-  }
-
-  .logo img {
-    height: 70px; /* Slightly smaller so it doesn't take up the whole screen */
-  }
-
-  /* Center and wrap the navigation links */
-  nav ul {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  nav ul li a {
-    font-size: 1rem; /* Slightly smaller text */
-  }
-
-  /* Adjust main content spacing */
-  main {
-    padding: 30px 5%;
-  }
-
-  /* Prevent the calendar from being too tall on small screens */
-  .dark-calendar {
-    height: 450px; 
-  }
-}
+/* Mobile Responsive */
+@media (max-width: 950px) {
+  header { flex-direction: column; height: auto; padding: 20px 5%; gap: 15px; }
+  .logo { height: 70px; }
+  
+  #calendar-section .calendar-flex-container { flex-direction: column; }
+  #calendar-section .dark-calendar { height: 450px; }
 }
