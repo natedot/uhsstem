@@ -185,3 +185,99 @@ footer a:hover {
   border: none;
   display: block; /* Removes any tiny default gaps underneath the iframe */
 }
+
+/* =========================================
+   8. MOBILE RESPONSIVENESS
+   ========================================= */
+
+@media (max-width: 768px) {
+  /* Stack the header elements */
+  header {
+    flex-direction: column;
+    height: auto;
+    padding: 20px 5%;
+    gap: 15px; /* Adds space between the logo and the links */
+  }
+
+  /* Adjust the logo size for smaller screens */
+  .logo {
+    height: auto;
+  }
+
+  .logo a {
+    height: auto;
+  }
+
+  .logo img {
+    height: 70px; /* Slightly smaller so it doesn't take up the whole screen */
+  }
+
+  /* Center and wrap the navigation links */
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  nav ul li a {
+    font-size: 1rem; /* Slightly smaller text */
+  }
+
+  /* Adjust main content spacing */
+  main {
+    padding: 30px 5%;
+  }
+
+  /* Prevent the calendar from being too tall on small screens */
+  .dark-calendar {
+    height: 450px; 
+  }
+
+  /* =========================================
+   8. MOBILE RESPONSIVENESS
+   ========================================= */
+
+@media (max-width: 768px) {
+  /* Stack the header elements */
+  header {
+    flex-direction: column;
+    height: auto;
+    padding: 20px 5%;
+    gap: 15px; /* Adds space between the logo and the links */
+  }
+
+  /* Adjust the logo size for smaller screens */
+  .logo {
+    height: auto;
+  }
+
+  .logo a {
+    height: auto;
+  }
+
+  .logo img {
+    height: 70px; /* Slightly smaller so it doesn't take up the whole screen */
+  }
+
+  /* Center and wrap the navigation links */
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  nav ul li a {
+    font-size: 1rem; /* Slightly smaller text */
+  }
+
+  /* Adjust main content spacing */
+  main {
+    padding: 30px 5%;
+  }
+
+  /* Prevent the calendar from being too tall on small screens */
+  .dark-calendar {
+    height: 450px; 
+  }
+}
+}
