@@ -70,3 +70,80 @@ footer { text-align: center; padding: 30px 20px; background-color: var(--dark-bg
   #calendar-section .calendar-flex-container { flex-direction: column; }
   #calendar-section .dark-calendar { height: 450px; }
 }
+
+/* --- HAMBURGER MENU & MOBILE NAVIGATION --- */
+
+/* Hide the hamburger button on desktop */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    z-index: 100; /* Keeps the button on top of the full-screen menu */
+}
+
+.hamburger .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--white, #FFFFFF);
+}
+
+/* Stop the page from scrolling behind the menu when open */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Mobile Layout Trigger (Applies only to screens smaller than 768px) */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    /* Animate the hamburger into an 'X' */
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Full Screen Menu Styling */
+    nav ul {
+        position: fixed;
+        left: -100%; /* Hides the menu completely off the left side of the screen */
+        top: 0;
+        gap: 0;
+        flex-direction: column;
+        background-color: rgba(17, 17, 17, 0.98); /* Very dark, slight transparency */
+        width: 100%;
+        height: 100vh;
+        text-align: center;
+        transition: 0.3s ease-in-out;
+        justify-content: center; /* Centers links vertically */
+        align-items: center;
+        z-index: 99; /* Sits just underneath the hamburger button */
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    /* This class is added by JS to slide the menu into view */
+    nav ul.active {
+        left: 0;
+    }
+
+    nav ul li {
+        margin: 25px 0;
+    }
+
+    /* Make the links big and easy to tap on mobile */
+    nav ul li a {
+        font-size: 2rem; 
+        font-weight: bold;
+    }
+}
