@@ -1,36 +1,31 @@
 # uhsstem
-# UHS STEM Academy Outreach Club
+# UHS STEM Academy Website and Inventory Management
 
-Welcome to the official repository for the **Union High School STEM Academy Outreach Club** website. Our mission is to inspire the next generation of innovators by partnering with local elementary schools to deliver hands-on science, technology, engineering, and math experiences.
+This is the repository for the STEM Academy Website and Inventory Management system.
 
 ## Project Overview
 
-This website serves as the primary hub for our club, allowing us to coordinate schedules, communicate our mission, and connect with students, parents, and volunteers.
-
+This website serves as the primary hub for our club, allowing us to:
+* **Coordinate schedules**
+* **Communicate our mission**
+* **Simplify inventory requests and overall management**
+* **Connect with students, parents, and volunteers**
+  
 ### Key Features
 
-* **Outreach Mission**: Clearly defines our goal to make complex STEM concepts accessible and exciting for young learners.
-* **Dual-View Academy Schedule**:
-* **Monthly Calendar**: Provides a high-level view of upcoming events and workshops.
-* **Agenda View**: Offers a streamlined, chronological list of specific event details for quick reference.
-
-
+* **Dual-View Academy Schedule and Calendar**:
+* **Display Contact Info**
+* **Request Materials**: Simplify material requests into one form
+* **Interactive Spreadsheet**: Auto-populate material requests into classroom tabs - Archive and purge past inventory requests for future reference
 * **Responsive Design**: The site is fully optimized to look great on both desktop and mobile devices, featuring a "Dark Mode" aesthetic achieved through custom CSS filtering.
-* **Leadership Portal**: A dedicated area for club members to manage project materials and requests.
 
 ## Technical Stack
 
 * **HTML5**: Used for semantic structuring of the home, contact, and leadership pages.
 * **CSS3**: Includes custom variables for consistent branding, Flexbox for side-by-side calendar layouts, and Media Queries to ensure mobile responsiveness.
 * **Google Calendar API**: Integrates live scheduling data directly into our interface for real-time updates.
-
-## Getting Started
-
-To view or contribute to the site:
-
-1. **Clone the repository**: `git clone [repository-url]`
-2. **Run locally**: Open `index.html` in any modern web browser.
-3. **Customization**: To update the calendar, simply replace the `src` URL within the `iframe` elements inside the `#calendar-section` div in `index.html`.
+* **Google Scripts**
+* **Google Sheets**
 
 ## Layout Structure
 
