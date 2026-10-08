@@ -16,3 +16,15 @@ if (hamburger && navMenu) {
         if (e.target.closest('a')) setMenu(false);
     });
 }
+
+// Leaders Hub: resize the form iframe to fit the form, so there's no scroll box inside the page.
+// The Apps Script form sends its height with postMessage whenever it changes.
+const formFrame = document.getElementById('form-frame');
+if (formFrame) {
+    window.addEventListener('message', e => {
+        if (!/^https:\/\/[\w-]+\.googleusercontent\.com$/.test(e.origin)) return;
+        if (e.data && e.data.type === 'uhs-form-height') {
+            formFrame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 300), 6000) + 'px';
+        }
+    });
+}

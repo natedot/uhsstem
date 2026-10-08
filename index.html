@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css?v=1.3">
+    <link rel="stylesheet" href="style.css?v=1.4">
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -25,7 +25,7 @@
 
         <nav>
             <ul id="nav-menu">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html" aria-current="page">Home</a></li>
                 <li><a href="leaders.html">Leaders Hub</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
@@ -33,11 +33,20 @@
     </header>
 
     <main>
-        <h1>Inspiring the Next Generation of Innovators.</h1>
-        <p>Union STEM Academy hosts hands-on science learning sessions at local elementary schools every month.
-            <b>We turn curiosity into discovery.</b>
-        </p>
-        <br>
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Inspiring the Next Generation of Innovators.</h1>
+                <p>Union STEM Academy hosts hands-on science learning sessions at local elementary schools every month.
+                    <b>We turn curiosity into discovery.</b>
+                </p>
+                <div class="hero-actions">
+                    <a href="contact.html" class="btn">Volunteer With Us</a>
+                    <a href="#calendar-section" class="btn btn-outline">See the Schedule</a>
+                </div>
+            </div>
+            <img class="hero-img" src="images/hero.webp" alt="UHS STEM Academy leaders running a hands-on session with elementary students" width="1000" height="803">
+        </section>
+
         <h2>Our Mission</h2>
         <p>At Union High School, we believe that STEM is for everyone. Our mission is to make complex concepts accessible and exciting for young learners before they even reach middle school.
             By working directly with local elementary classrooms, we aren't just teaching lessons, we’re showing students that science is something they can do, not just something they read about in a textbook.
@@ -50,7 +59,7 @@
 
         <div id="calendar-section">
             <h2>Academy Schedule</h2>
-            <p>Stay up to date on meeting, sessions, and more!</p>
+            <p>Stay up to date on meetings, sessions, and more!</p>
             <div class="calendar-flex-container">
                 <div class="calendar-wrapper">
                     <iframe class="dark-calendar" title="Academy calendar" loading="lazy" scrolling="no"
