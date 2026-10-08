@@ -6,14 +6,15 @@
   --primary-red: #D31145;
   --dark-bg: #000000;
   --darker-bg: #111111;
+  --card-bg: #1a1a1a;
   --silver: #C0C0C0;
   --text-light: #F5F5F5;
   --white: #FFFFFF;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-body { background-color: var(--darker-bg); color: var(--text-light); line-height: 1.6; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--darker-bg); color: var(--text-light); line-height: 1.6; }
 
 /* Header & Nav */
 header {
@@ -39,111 +40,102 @@ main { padding: 40px 5%; max-width: 1400px; margin: 0 auto; min-height: 80vh; }
 
 /* Calendar Section (STRICTLY SCOPED) */
 #calendar-section { margin-top: 60px; }
-#calendar-section .calendar-flex-container { display: flex; flex-direction: row; gap: 20px; width: 100%; margin-top: 20px; }
+#calendar-section .calendar-flex-container { display: flex; gap: 20px; margin-top: 20px; }
 #calendar-section .calendar-wrapper { flex: 1; min-width: 0; background-color: var(--dark-bg); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
 #calendar-section .dark-calendar { filter: invert(0.9) hue-rotate(180deg); background-color: #ffffff; border: none; display: block; width: 100%; height: 600px; }
 
-/* UI Elements */
-.form-container {
-    width: 100%;
-    max-width: 800px; /* Keeps it from getting too wide on desktop */
-    margin: 0 auto;   /* Centers it on the page */
-    padding: 0 15px;  /* Adds breathing room on mobile edges */
-    box-sizing: border-box; /* Ensures padding doesn't widen the container */
-    overflow: hidden; /* Prevents invisible overflow issues */
-  }
-  .form-container iframe {
-    width: 100%;
-    min-width: 100%; /* Forces the iframe to shrink to fit the mobile container */
-    border: none;
-}
+/* Leaders Hub form */
+.form-container { max-width: 800px; margin: 0 auto; padding: 0 15px; overflow: hidden; }
+.form-container iframe { display: block; width: 100%; border: none; }
+
+/* Buttons */
 .btn { display: inline-block; background-color: var(--primary-red); color: var(--white); padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+.btn.spaced { margin-top: 40px; }
+
+/* Contact cards */
+.contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px; }
+.contact-card { background-color: var(--card-bg); padding: 20px; border-left: 4px solid var(--primary-red); display: flex; align-items: center; gap: 15px; }
+.contact-card img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.contact-card h3 { margin-bottom: 5px; }
+.contact-card p { margin: 2px 0; overflow-wrap: anywhere; }
+
+/* Branches */
+.branch-grid { display: flex; gap: 30px; margin-top: 30px; justify-content: center; }
+.branch { flex: 1; text-align: center; }
+.branch img { width: 200px; height: 200px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; }
+.branch h3 { margin-bottom: 8px; }
+.branch p { margin-bottom: 12px; }
+.branch p.tight { margin: 2px 0; }
 
 /* Footer */
 footer { text-align: center; padding: 30px 20px; background-color: var(--dark-bg); color: var(--silver); border-top: 1px solid #333; }
+.social-link { color: var(--primary-red); text-decoration: none; font-weight: bold; }
 
 /* Mobile Responsive */
 @media (max-width: 950px) {
   header { flex-direction: column; height: auto; padding: 20px 5%; gap: 15px; }
   .logo { height: 70px; }
-  
+
   #calendar-section .calendar-flex-container { flex-direction: column; }
   #calendar-section .dark-calendar { height: 450px; }
 }
 
 /* --- HAMBURGER MENU & MOBILE NAVIGATION --- */
 
-/* Hide the hamburger button on desktop */
+/* Hidden on desktop */
 .hamburger {
-    display: none;
-    cursor: pointer;
-    z-index: 100; /* Keeps the button on top of the full-screen menu */
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 100; /* Keeps the button on top of the full-screen menu */
 }
 
 .hamburger .bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    background-color: var(--white, #FFFFFF);
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  transition: all 0.3s ease-in-out;
+  background-color: var(--white);
 }
 
 /* Stop the page from scrolling behind the menu when open */
-body.no-scroll {
-    overflow: hidden;
-}
+body.no-scroll { overflow: hidden; }
 
-/* Mobile Layout Trigger (Applies only to screens smaller than 768px) */
 @media (max-width: 768px) {
-    .hamburger {
-        display: block;
-    }
+  .hamburger { display: block; }
 
-    /* Animate the hamburger into an 'X' */
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
+  /* Animate the hamburger into an 'X' */
+  .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .hamburger.active .bar:nth-child(2) { opacity: 0; }
+  .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-    /* Full Screen Menu Styling */
-    nav ul {
-        position: fixed;
-        left: -100%; /* Hides the menu completely off the left side of the screen */
-        top: 0;
-        gap: 0;
-        flex-direction: column;
-        background-color: rgba(17, 17, 17, 0.98); /* Very dark, slight transparency */
-        width: 100%;
-        height: 100vh;
-        text-align: center;
-        transition: 0.3s ease-in-out;
-        justify-content: center; /* Centers links vertically */
-        align-items: center;
-        z-index: 99; /* Sits just underneath the hamburger button */
-        margin: 0;
-        padding: 0;
-        display: flex;
-    }
+  /* Full-screen menu, hidden off the left edge until opened */
+  nav ul {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    gap: 0;
+    flex-direction: column;
+    background-color: rgba(17, 17, 17, 0.98);
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    z-index: 99; /* Sits just underneath the hamburger button */
+  }
 
-    /* This class is added by JS to slide the menu into view */
-    nav ul.active {
-        left: 0;
-    }
+  /* Added by script.js to slide the menu into view */
+  nav ul.active { left: 0; }
 
-    nav ul li {
-        margin: 25px 0;
-    }
+  nav ul li { margin: 25px 0; }
 
-    /* Make the links big and easy to tap on mobile */
-    nav ul li a {
-        font-size: 2rem; 
-        font-weight: bold;
-    }
+  /* Big, easy-to-tap links */
+  nav ul li a { font-size: 2rem; font-weight: bold; }
+
+  .branch-grid { flex-direction: column; }
+  .contact-grid { grid-template-columns: 1fr; }
 }

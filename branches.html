@@ -4,38 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UHS STEM Academy | Branches</title>
-    <link rel="icon" type="image/png" href="https://github.com/natedot/uhsstem/blob/main/icon.png?raw=true">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css?v=1.2">
-    <link rel="apple-touch-icon" href="https://github.com/natedot/uhsstem/blob/main/icon.png?raw=true">
+    <link rel="stylesheet" href="style.css?v=1.3">
+    <script src="script.js" defer></script>
 </head>
 <body>
 
-<header>
+    <header>
         <div class="logo">
-            <a href="index.html"><img src="https://github.com/natedot/uhsstem/blob/main/icon.png?raw=true" alt="UHS STEM Academy Logo"></a>
+            <a href="index.html"><img src="icon.png" alt="UHS STEM Academy Logo"></a>
         </div>
-        
-        <!-- The Hamburger Button -->
-        <div class="hamburger" id="hamburger">
+
+        <button class="hamburger" id="hamburger" aria-label="Menu">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
-        </div>
+        </button>
 
         <nav>
             <ul id="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="leaders.html">Leaders Hub</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                
             </ul>
         </nav>
     </header>
 
     <main>
         <h1>Branches</h1>
-        <p> UHS STEM Academy has several branches, all reliant on different skill sets. Whether you love talking to kids, boxing materials, 
+        <p>UHS STEM Academy has several branches, all reliant on different skill sets. Whether you love talking to kids, boxing materials,
             or planning events, we have a branch for you! Without these divisions, STEM Academy would not
             be able to function. We encourage you to contact us and would be thrilled to have you join our team in any capacity!
         </p>
@@ -48,25 +47,30 @@
             If so, please reach out to us, and we would love to brainstorm with you!
         </p>
 
-        <div style="display: flex; gap: 30px; margin-top: 30px; justify-content: center;">
-
-            <div style="flex: 1; text-align: center;">
-                <img src="Profile Pictures/StudentLeaders.jpg" alt="Student Leaders" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;">
-                <h3 style="margin: 0 0 8px 0;">Student Leaders</h3>
-                <p style="margin: 0 0 12px 0;">2-5 leaders run a elementary school classroom. Through brainstorming experiments, coordinating
+        <div class="branch-grid">
+            <div class="branch">
+                <img src="images/team/StudentLeaders.webp" alt="Student Leaders">
+                <h3>Student Leaders</h3>
+                <p>2-5 leaders run a elementary school classroom. Through brainstorming experiments, coordinating
                     volunteers, and contacting teachers, they are their classroom's point people.</p>
-                <p style="margin: 2px 0;">Contact: insert</p>
-                <p style="margin: 2px 0;">Email: insert</p>
+                <p class="tight">Contact: insert</p>
+                <p class="tight">Email: insert</p>
             </div>
 
-            <div style="flex: 1; text-align: center;">
-                <img src="Profile Pictures/BlankImage.jpg" alt="Inventory" style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;">
-                <h3 style="margin: 0 0 8px 0;">Inventory</h3>
-                <p style="margin: 0 0 12px 0;">Packs material boxes for each STEM classroom, ensuring all supplies are available and organized.</p>
-                <p style="margin: 2px 0;">Contact: insert</p>
-                <p style="margin: 2px 0;">Email: insert</p>
+            <div class="branch">
+                <img src="images/team/BlankImage.webp" alt="Inventory">
+                <h3>Inventory</h3>
+                <p>Packs material boxes for each STEM classroom, ensuring all supplies are available and organized.</p>
+                <p class="tight">Contact: insert</p>
+                <p class="tight">Email: insert</p>
             </div>
         </div>
-
     </main>
-        <script src="script.js"></script>
+
+    <footer>
+        <p>&copy; 2026 Union High School STEM Academy</p>
+        <p><a class="social-link" href="https://www.instagram.com/uhsstem?utm_source=qr" target="_blank" rel="noopener noreferrer">Follow us on Instagram @uhsstem</a></p>
+    </footer>
+
+</body>
+</html>
