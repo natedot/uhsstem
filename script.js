@@ -1,31 +1,18 @@
-// This file is linked to all HTML pages.
-// You can add interactive elements here later.
+// Mobile hamburger menu (loaded with `defer` on every page, so the DOM is ready)
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('nav-menu');
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("UHS STEM Academy website scripts loaded successfully.");
-    
-    // Future code for mobile menu toggles or form validations can go here.
-});
+function setMenu(open) {
+    hamburger.classList.toggle('active', open);
+    navMenu.classList.toggle('active', open);
+    document.body.classList.toggle('no-scroll', open);
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => setMenu(!navMenu.classList.contains('active')));
 
-    if (hamburger && navMenu) {
-        // Toggle the menu when the hamburger is clicked
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            document.body.classList.toggle('no-scroll');
-        });
-
-        // Close the menu automatically if a link is clicked
-        document.querySelectorAll('nav ul li a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-                document.body.classList.remove('no-scroll');
-            });
-        });
-    }
-});
+    // Close the menu when a link is tapped
+    navMenu.addEventListener('click', e => {
+        if (e.target.closest('a')) setMenu(false);
+    });
+}
