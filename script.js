@@ -38,6 +38,7 @@ if (slides.length > 1) {
     dots.className = 'slide-dots';
     let current = 0;
     let timer;
+    let hovering = false;
 
     function showSlide(i) {
         current = (i + slides.length) % slides.length;
@@ -47,7 +48,7 @@ if (slides.length > 1) {
 
     function restartTimer() {
         clearInterval(timer);
-        timer = setInterval(() => showSlide(current + 1), 4000);
+        if (!hovering) timer = setInterval(() => showSlide(current + 1), 4000);
     }
 
     slides.forEach((img, n) => {
@@ -58,9 +59,19 @@ if (slides.length > 1) {
     });
     slideshow.appendChild(dots);
 
+    // Previous / next arrows on the sides (they fade in when hovering over the photos)
+    [['prev', 'Previous photo', '\u2039', -1], ['next', 'Next photo', '\u203A', 1]].forEach(([cls, label, symbol, step]) => {
+        const arrow = document.createElement('button');
+        arrow.className = `slide-arrow ${cls}`;
+        arrow.setAttribute('aria-label', label);
+        arrow.textContent = symbol;
+        arrow.addEventListener('click', () => { showSlide(current + step); restartTimer(); });
+        slideshow.appendChild(arrow);
+    });
+
     // Pause while the mouse is over the photos
-    slideshow.addEventListener('mouseenter', () => clearInterval(timer));
-    slideshow.addEventListener('mouseleave', restartTimer);
+    slideshow.addEventListener('mouseenter', () => { hovering = true; clearInterval(timer); });
+    slideshow.addEventListener('mouseleave', () => { hovering = false; restartTimer(); });
 
     // Photos after the first load lazily; once the page is ready, fetch them so no slide shows up blank
     window.addEventListener('load', () => slides.forEach(img => { img.loading = 'eager'; }));
