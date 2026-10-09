@@ -62,6 +62,9 @@ if (slides.length > 1) {
     slideshow.addEventListener('mouseenter', () => clearInterval(timer));
     slideshow.addEventListener('mouseleave', restartTimer);
 
+    // Photos after the first load lazily; once the page is ready, fetch them so no slide shows up blank
+    window.addEventListener('load', () => slides.forEach(img => { img.loading = 'eager'; }));
+
     showSlide(0);
     restartTimer();
 }
