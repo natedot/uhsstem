@@ -28,3 +28,40 @@ if (formFrame) {
         }
     });
 }
+
+// Home page: photo slideshow that slides to the next photo every few seconds
+const slideshow = document.getElementById('slideshow');
+const slides = slideshow ? slideshow.querySelectorAll('.slides img') : [];
+if (slides.length > 1) {
+    const track = slideshow.querySelector('.slides');
+    const dots = document.createElement('div');
+    dots.className = 'slide-dots';
+    let current = 0;
+    let timer;
+
+    function showSlide(i) {
+        current = (i + slides.length) % slides.length;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        dots.querySelectorAll('button').forEach((d, n) => d.setAttribute('aria-current', n === current));
+    }
+
+    function restartTimer() {
+        clearInterval(timer);
+        timer = setInterval(() => showSlide(current + 1), 4000);
+    }
+
+    slides.forEach((img, n) => {
+        const dot = document.createElement('button');
+        dot.setAttribute('aria-label', `Show photo ${n + 1}`);
+        dot.addEventListener('click', () => { showSlide(n); restartTimer(); });
+        dots.appendChild(dot);
+    });
+    slideshow.appendChild(dots);
+
+    // Pause while the mouse is over the photos
+    slideshow.addEventListener('mouseenter', () => clearInterval(timer));
+    slideshow.addEventListener('mouseleave', restartTimer);
+
+    showSlide(0);
+    restartTimer();
+}
