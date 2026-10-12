@@ -47,7 +47,7 @@ main { padding: 40px 5%; max-width: 1400px; margin: 0 auto; min-height: 80vh; }
 #calendar-section .dark-calendar { filter: invert(0.9) hue-rotate(180deg); background-color: #ffffff; border: none; display: block; width: 100%; height: 600px; }
 
 /* Leaders Hub form */
-.form-container { max-width: 800px; margin: 0 auto; padding: 0 15px; overflow: hidden; }
+.form-container { max-width: 1000px; margin: 0 auto; overflow: hidden; }
 .form-container iframe { display: block; width: 100%; border: none; }
 
 /* Buttons */
@@ -144,6 +144,8 @@ footer { text-align: center; padding: 30px 20px; background-color: var(--dark-bg
 body.no-scroll { overflow: hidden; }
 
 @media (max-width: 768px) {
+  .form-container { margin: 0 -5vw; }
+
   .hamburger { display: block; }
 
   /* Animate the hamburger into an 'X' */
