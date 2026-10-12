@@ -77,16 +77,29 @@ if (slides.length > 1) {
     let current = 0;
     let timer;
     let hovering = false;
+    let pageLoaded = false;
+
+    // Only the photo after the current one is fetched ahead of time, so visitors who don't stay don't download them all
+    const preload = i => {
+        const img = slides[i % slides.length];
+        if (!img.dataset.src) return;
+        img.srcset = img.dataset.srcset;
+        img.src = img.dataset.src;
+        delete img.dataset.src;
+    };
 
     function showSlide(i) {
         current = (i + slides.length) % slides.length;
         track.style.transform = `translateX(-${current * 100}%)`;
         dots.querySelectorAll('button').forEach((d, n) => d.setAttribute('aria-current', n === current));
+        preload(current); // in case someone jumps straight to a photo with the dots
+        if (pageLoaded) preload(current + 1);
     }
 
     function restartTimer() {
         clearInterval(timer);
-        if (!hovering) timer = setInterval(() => showSlide(current + 1), 4000);
+        // Skip turns while the tab is in the background
+        if (!hovering) timer = setInterval(() => { if (!document.hidden) showSlide(current + 1); }, 4000);
     }
 
     slides.forEach((img, n) => {
@@ -111,9 +124,20 @@ if (slides.length > 1) {
     slideshow.addEventListener('mouseenter', () => { hovering = true; clearInterval(timer); });
     slideshow.addEventListener('mouseleave', () => { hovering = false; restartTimer(); });
 
-    // Photos after the first load lazily; once the page is ready, fetch them so no slide shows up blank
-    window.addEventListener('load', () => slides.forEach(img => { img.loading = 'eager'; }));
+    window.addEventListener('load', () => { pageLoaded = true; preload(current + 1); });
 
     showSlide(0);
     restartTimer();
+}
+
+// Home page: Google Calendar is heavy, so it only loads once the visitor scrolls close to it
+const calendars = document.querySelectorAll('iframe[data-src]');
+const loadCalendar = frame => { frame.src = frame.dataset.src; frame.removeAttribute('data-src'); };
+if ('IntersectionObserver' in window) {
+    const watcher = new IntersectionObserver(entries => entries.forEach(e => {
+        if (e.isIntersecting) { loadCalendar(e.target); watcher.unobserve(e.target); }
+    }));
+    calendars.forEach(frame => watcher.observe(frame));
+} else {
+    calendars.forEach(loadCalendar);
 }

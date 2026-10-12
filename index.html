@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UHS STEM Academy | Home</title>
-    <link rel="icon" type="image/png" href="icon.png">
-    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css?v=1.9">
-    <script src="script.js?v=1.8" defer></script>
+    <link rel="stylesheet" href="style.css?v=2.0">
+    <script src="script.js?v=2.0" defer></script>
 </head>
 <body>
 
     <header>
         <div class="logo">
-            <a href="index.html"><img src="icon.png" alt="UHS STEM Academy Logo"></a>
+            <a href="index.html"><img src="images/logo.webp" alt="UHS STEM Academy Logo" width="160" height="160"></a>
         </div>
 
         <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -47,14 +47,14 @@
             <!-- Photo slideshow: add more photos by copying the <img> line (put the files in images/slideshow/) -->
             <div class="slideshow" id="slideshow" aria-roledescription="carousel" aria-label="Photos from our sessions">
                 <div class="slides">
-                    <img src="images/hero.webp" alt="UHS STEM Academy leaders running a hands-on session with elementary students" width="1000" height="803">
-                    <img src="images/slideshow/session-5.webp" alt="Two students building a tower out of spaghetti and marshmallows" width="1000" height="667" loading="lazy">
-                    <img src="images/slideshow/session-3.webp" alt="A student leader and kids building circuits together" width="1000" height="665" loading="lazy">
-                    <img src="images/slideshow/session-6.webp" alt="A student leader helping a young student assemble a balloon project" width="1000" height="750" loading="lazy">
-                    <img src="images/slideshow/session-2.webp" alt="Families gathered around a science demonstration table" width="1000" height="665" loading="lazy">
-                    <img src="images/slideshow/session-7.webp" alt="A student leader helping a young student with a pipe-cleaner build" width="1000" height="750" loading="lazy">
-                    <img src="images/slideshow/session-4.webp" alt="Hands working together on a hands-on experiment" width="1000" height="667" loading="lazy">
-                    <img src="images/slideshow/session-1.webp" alt="Students and families gathered around a large group activity" width="1000" height="665" loading="lazy">
+                    <img src="images/hero.webp" srcset="images/hero-600.webp 600w, images/hero.webp 1000w" sizes="(max-width: 950px) 90vw, 560px" alt="UHS STEM Academy leaders running a hands-on session with elementary students" width="1000" height="803" fetchpriority="high">
+                    <img data-src="images/slideshow/session-5.webp" data-srcset="images/slideshow/session-5-600.webp 600w, images/slideshow/session-5.webp 1000w" sizes="(max-width: 950px) 90vw, 560px" alt="Two students building a tower out of spaghetti and marshmallows" width="1000" height="667">
+                    <img data-src="images/slideshow/session-3.webp" data-srcset="images/slideshow/session-3-600.webp 600w, images/slideshow/session-3.webp 1000w" sizes="(max-width: 950px) 90vw, 560px" alt="A student leader and kids building circuits together" width="1000" height="665">
+                    <img data-src="images/slideshow/session-6.webp" data-srcset="images/slideshow/session-6-600.webp 600w, images/slideshow/session-6.webp 1000w" sizes="(max-width: 950px) 90vw, 560px" alt="A student leader helping a young student assemble a balloon project" width="1000" height="750">
+                    <img data-src="images/slideshow/session-2.webp" data-srcset="images/slideshow/session-2-600.webp 600w, images/slideshow/session-2.webp 1000w" sizes="(max-width: 950px) 90vw, 560px" alt="Families gathered around a science demonstration table" width="1000" height="665">
+                    <img data-src="images/slideshow/session-7.webp" data-srcset="images/slideshow/session-7-600.webp 600w, images/slideshow/session-7.webp 1000w" sizes="(max-width: 950px) 90vw, 560px" alt="A student leader helping a young student with a pipe-cleaner build" width="1000" height="750">
+                    <img data-src="images/slideshow/session-4.webp" data-srcset="images/slideshow/session-4-600.webp 600w, images/slideshow/session-4.webp 1000w" sizes="(max-width: 950px) 90vw, 560px" alt="Hands working together on a hands-on experiment" width="1000" height="667">
+                    <img data-src="images/slideshow/session-1.webp" data-srcset="images/slideshow/session-1-600.webp 600w, images/slideshow/session-1.webp 1000w" sizes="(max-width: 950px) 90vw, 560px" alt="Students and families gathered around a large group activity" width="1000" height="665">
                 </div>
             </div>
         </section>
@@ -70,12 +70,12 @@
             <p>Stay up to date on meetings, sessions, and more!</p>
             <div class="calendar-flex-container">
                 <div class="calendar-wrapper">
-                    <iframe class="dark-calendar" title="Academy calendar" loading="lazy" scrolling="no"
-                        src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showCalendars=0&showTz=0&mode=MONTH&title=UHS%20STEM%20Academy%20Calendar&src=Y183M2MwYTc0MjMxNjFhYmMwMDk4NjY4NzM3Nzk0ZTg5MWMzNTNiNTM5YzEyOTI5YTc4YzQxZDQyZWEzZGFjZjE3QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%239e69af"></iframe>
+                    <iframe class="dark-calendar" title="Academy calendar" scrolling="no"
+                        data-src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showCalendars=0&showTz=0&mode=MONTH&title=UHS%20STEM%20Academy%20Calendar&src=Y183M2MwYTc0MjMxNjFhYmMwMDk4NjY4NzM3Nzk0ZTg5MWMzNTNiNTM5YzEyOTI5YTc4YzQxZDQyZWEzZGFjZjE3QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%239e69af"></iframe>
                 </div>
                 <div class="calendar-wrapper">
-                    <iframe class="dark-calendar" title="Academy event list" loading="lazy" scrolling="no"
-                        src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showCalendars=0&showTz=0&mode=AGENDA&showTabs=0&showDate=0&title=UHS%20STEM%20Academy%20Event%20List&src=Y183M2MwYTc0MjMxNjFhYmMwMDk4NjY4NzM3Nzk0ZTg5MWMzNTNiNTM5YzEyOTI5YTc4YzQxZDQyZWEzZGFjZjE3QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23ac7f5e"></iframe>
+                    <iframe class="dark-calendar" title="Academy event list" scrolling="no"
+                        data-src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showCalendars=0&showTz=0&mode=AGENDA&showTabs=0&showDate=0&title=UHS%20STEM%20Academy%20Event%20List&src=Y183M2MwYTc0MjMxNjFhYmMwMDk4NjY4NzM3Nzk0ZTg5MWMzNTNiNTM5YzEyOTI5YTc4YzQxZDQyZWEzZGFjZjE3QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23ac7f5e"></iframe>
                 </div>
             </div>
         </div>
