@@ -53,9 +53,12 @@ if (fullscreenBtn) {
     fullscreenBtn.addEventListener('click', () => {
         if (box.classList.contains('is-fullscreen')) return exitFullscreen();
         setFullscreen(true);
-        const request = box.requestFullscreen || box.webkitRequestFullscreen;
-        const result = request && request.call(box);
-        if (result && result.catch) result.catch(() => {});
+        // If the browser refuses real full screen, the page-filling version above still applies
+        try {
+            const request = box.requestFullscreen || box.webkitRequestFullscreen;
+            const result = request && request.call(box);
+            if (result && result.catch) result.catch(() => {});
+        } catch (err) {}
     });
 
     // Leaving the browser's full screen (Esc key, swipe) also exits ours
