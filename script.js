@@ -24,9 +24,44 @@ if (formFrame) {
     window.addEventListener('message', e => {
         if (!/^https:\/\/[\w-]+\.googleusercontent\.com$/.test(e.origin)) return;
         if (e.data && e.data.type === 'uhs-form-height') {
-            formFrame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 300), 6000) + 'px';
+            formFrame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 150), 6000) + 'px';
         }
     });
+}
+
+// Leaders Hub: Full Screen button makes the form cover the whole screen.
+// Uses the browser's real full screen where it's supported; iPhones (which don't allow it) still get the
+// page-filling version.
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+if (fullscreenBtn) {
+    const box = document.getElementById('form-container');
+    const label = fullscreenBtn.querySelector('span');
+    const browserFullscreen = () => document.fullscreenElement || document.webkitFullscreenElement;
+
+    function setFullscreen(on) {
+        box.classList.toggle('is-fullscreen', on);
+        document.body.classList.toggle('no-scroll', on);
+        label.textContent = on ? 'Exit Full Screen' : 'Full Screen';
+        fullscreenBtn.setAttribute('aria-pressed', on);
+    }
+
+    function exitFullscreen() {
+        setFullscreen(false);
+        if (browserFullscreen()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    }
+
+    fullscreenBtn.addEventListener('click', () => {
+        if (box.classList.contains('is-fullscreen')) return exitFullscreen();
+        setFullscreen(true);
+        const request = box.requestFullscreen || box.webkitRequestFullscreen;
+        const result = request && request.call(box);
+        if (result && result.catch) result.catch(() => {});
+    });
+
+    // Leaving the browser's full screen (Esc key, swipe) also exits ours
+    ['fullscreenchange', 'webkitfullscreenchange'].forEach(evt =>
+        document.addEventListener(evt, () => { if (!browserFullscreen()) setFullscreen(false); }));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && box.classList.contains('is-fullscreen')) exitFullscreen(); });
 }
 
 // Home page: photo slideshow that slides to the next photo every few seconds

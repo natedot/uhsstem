@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="icon.png">
     <link rel="apple-touch-icon" href="icon.png">
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css?v=1.7">
+    <link rel="stylesheet" href="style.css?v=1.8">
     <script src="script.js" defer></script>
 </head>
 <body>
@@ -36,7 +36,13 @@
         <h1>Leaders Hub</h1>
         <p>Welcome to the leadership portal. Log in below to request materials for your next session, or to submit attendance and feedback after a session.</p>
         <br>
-        <div class="form-container">
+        <div class="form-container" id="form-container">
+            <div class="form-toolbar">
+                <button type="button" class="fullscreen-btn" id="fullscreen-btn" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <span>Full Screen</span>
+                </button>
+            </div>
             <iframe id="form-frame" src="https://script.google.com/macros/s/AKfycbysDq5um3VDU4LjH4Bnhhw3-myMZpQP-RjdVgUwbBjKF1cj2Ygu3Jdu3scMWyQJ2uEZ/exec" title="Leaders Hub forms" height="800">Loading Leaders Hub...</iframe>
         </div>
         <br>

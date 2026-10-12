@@ -49,6 +49,13 @@ main { padding: 40px 5%; max-width: 1400px; margin: 0 auto; min-height: 80vh; }
 /* Leaders Hub form */
 .form-container { max-width: 1000px; margin: 0 auto; overflow: hidden; }
 .form-container iframe { display: block; width: 100%; border: none; }
+.form-toolbar { display: flex; justify-content: flex-end; padding: 0 12px 8px; }
+.fullscreen-btn { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--silver); border: 1px solid #444; border-radius: 5px; padding: 7px 14px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: color 0.2s ease, border-color 0.2s ease; }
+.fullscreen-btn:hover { color: var(--white); border-color: var(--primary-red); }
+
+/* Full screen: the form covers the whole screen and scrolls on its own */
+.form-container.is-fullscreen { position: fixed; inset: 0; z-index: 200; max-width: none; margin: 0; background-color: var(--darker-bg); overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.form-container.is-fullscreen .form-toolbar { position: sticky; top: 0; z-index: 1; padding: 10px 12px; background-color: var(--dark-bg); border-bottom: 1px solid #333; }
 
 /* Buttons */
 .btn { display: inline-block; background-color: var(--primary-red); color: var(--white); padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background-color 0.2s ease, transform 0.2s ease; }
