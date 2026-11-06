@@ -7,8 +7,10 @@
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css?v=2.1">
-    <script src="script.js?v=2.2" defer></script>
+    <link rel="stylesheet" href="style.css?v=2.2">
+    <script src="script.js?v=2.3" defer></script>
+    <link rel="stylesheet" href="leaders.css?v=1.0">
+    <script src="leaders.js?v=1.0" defer></script>
 </head>
 <body>
 
@@ -36,16 +38,114 @@
         <h1>Leaders Hub</h1>
         <p>Welcome to the leadership portal. Log in below to request materials for your next session, or to submit attendance and feedback after a session.</p>
         <br>
-        <div class="form-container" id="form-container">
-            <div class="form-toolbar">
-                <a class="form-fallback" id="form-fallback" href="https://script.google.com/macros/s/AKfycbysDq5um3VDU4LjH4Bnhhw3-myMZpQP-RjdVgUwbBjKF1cj2Ygu3Jdu3scMWyQJ2uEZ/exec" target="_blank" rel="noopener noreferrer">Form not loading? Open it in a new tab &#8599;</a>
-                <button type="button" class="fullscreen-btn" id="fullscreen-btn" aria-pressed="false">
-                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                    <span>Full Screen</span>
-                </button>
+        <div class="hub">
+            <!-- Password lock screen (shown first) -->
+            <form id="lockScreen">
+                <div class="form-group">
+                    <label for="pwInput">Leader Password</label>
+                    <input type="password" id="pwInput" placeholder="Enter leader password" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="hbtn hbtn-submit" id="unlockBtn">Unlock</button>
+                <div id="lockStatus" class="status err"></div>
+            </form>
+
+            <!-- Leaders Hub (hidden until unlocked) -->
+            <div id="hub" hidden>
+                <div class="tabs" role="tablist">
+                    <button type="button" class="tab" role="tab" data-panel="materialsPanel" aria-selected="true">📦 Materials Request</button>
+                    <button type="button" class="tab" role="tab" data-panel="feedbackPanel" aria-selected="false">📝 Feedback / Attendance</button>
+                </div>
+
+                <!-- Materials request -->
+                <section id="materialsPanel" role="tabpanel">
+                    <form id="requestForm">
+                        <div class="form-group">
+                            <label for="schoolName">Select Elementary School</label>
+                            <select id="schoolName" name="schoolName" class="school-select" required></select>
+                        </div>
+
+                        <div id="experimentsContainer"></div>
+
+                        <button type="button" class="hbtn hbtn-add-exp" id="addExpBtn">+ Add Another Experiment</button>
+                        <button type="submit" class="hbtn hbtn-submit" id="submitBtn">Submit Entire Request</button>
+                    </form>
+
+                    <div id="status" class="status"></div>
+                    <div id="summary" class="summary" hidden></div>
+                </section>
+
+                <!-- Feedback / attendance (fill out after each session) -->
+                <section id="feedbackPanel" role="tabpanel" hidden>
+                    <form id="feedbackForm">
+                        <div class="form-group">
+                            <label for="fbSchool">Elementary School</label>
+                            <select id="fbSchool" name="schoolName" class="school-select" required></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fbDate">Session Date</label>
+                            <input type="date" id="fbDate" name="sessionDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Attendance <span class="hint">(full name of everyone who helped at this session)</span></label>
+                            <div id="namesList"></div>
+                            <button type="button" class="hbtn hbtn-add" id="addNameBtn">+ Add Person</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fbWell">What went well?</label>
+                            <textarea id="fbWell" name="wentWell" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fbBad">What didn't go well?</label>
+                            <textarea id="fbBad" name="didntGoWell" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fbImprove">How can we improve?</label>
+                            <textarea id="fbImprove" name="improve" required></textarea>
+                        </div>
+
+                        <button type="submit" class="hbtn hbtn-submit" id="fbSubmitBtn">Submit Feedback</button>
+                    </form>
+
+                    <div id="fbStatus" class="status"></div>
+                    <div id="fbSummary" class="summary" hidden></div>
+                </section>
             </div>
-            <iframe id="form-frame" src="https://script.google.com/macros/s/AKfycbysDq5um3VDU4LjH4Bnhhw3-myMZpQP-RjdVgUwbBjKF1cj2Ygu3Jdu3scMWyQJ2uEZ/exec" title="Leaders Hub forms" height="800">Loading Leaders Hub...</iframe>
         </div>
+
+        <!-- Templates: one copy of the markup, cloned by leaders.js -->
+        <template id="materialTemplate">
+            <div class="material-row">
+                <input type="text" class="mat-name" placeholder="Material Name" required>
+                <input type="text" class="mat-qty" placeholder="Qty (e.g., 2 boxes)" required>
+                <input type="text" class="mat-notes" placeholder="Notes / Links (Optional)">
+                <button type="button" class="hbtn hbtn-remove" data-action="remove-row">X</button>
+            </div>
+        </template>
+
+        <template id="nameTemplate">
+            <div class="name-row">
+                <input type="text" class="person-name" placeholder="First and last name" autocomplete="off" required>
+                <button type="button" class="hbtn hbtn-remove" data-action="remove-name">X</button>
+            </div>
+        </template>
+
+        <template id="experimentTemplate">
+            <div class="experiment-card">
+                <div class="experiment-header">
+                    <input type="text" class="exp-name" placeholder="Experiment Name (e.g., Slime)" required>
+                    <button type="button" class="hbtn hbtn-remove" data-action="remove-card">X</button>
+                </div>
+                <div class="materials-list">
+                    <label>Materials Needed for this Experiment:</label>
+                </div>
+                <button type="button" class="hbtn hbtn-add" data-action="add-material">+ Add Material to this Experiment</button>
+            </div>
+        </template>
         <br>
         <p>If you have any issues or made a mistake submitting materials, click the button below, make a comment on the sheet, and an inventory leader will fix it or get back to you.</p>
         <br>

@@ -1,10 +1,14 @@
 # Leaders Hub (Google Apps Script)
 
-Source for the password-protected form embedded on `leaders.html`. It runs in the Apps Script project
-attached to the inventory Google Sheet, not on this website.
+Server side of the Leaders Hub. It runs in the Apps Script project attached to the inventory Google
+Sheet, not on this website.
 
-- `Code.gs` – server code: password check, materials requests, feedback/attendance, Archive & Purge menu
-- `Index.html` – the form shown inside the Leaders Hub
+The form itself lives on the website (`leaders.html`, `leaders.js`, `leaders.css`). It sends each
+request to this script's `doPost` without a Google sign-in, so the Google account a device is signed
+into can't block it (embedding Google's page did, which caused blank boxes).
+
+- `Code.gs` – `doPost` entry point, password check, materials requests, feedback/attendance, Archive & Purge menu
+- `Index.html` – the old embedded version of the form (served by `doGet`); no longer used by the website
 
 ## Updating the live form
 

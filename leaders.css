@@ -1,0 +1,176 @@
+/* ========================================================
+   LEADERS HUB FORM (only loaded on leaders.html)
+   Buttons use .hbtn so they don't pick up the site-wide .btn link style.
+   ======================================================== */
+
+.hub {
+  --border-dark: #333333;
+  --error: #ff4d4d;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px;
+  background: var(--dark-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  line-height: normal;
+}
+
+.hub .form-group { margin-bottom: 20px; }
+
+.hub label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--silver);
+}
+
+.hub select, .hub input, .hub textarea {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--darker-bg);
+  color: var(--white);
+  border: 1px solid var(--border-dark);
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+}
+.hub select:focus, .hub input:focus, .hub textarea:focus { outline: none; border-color: var(--primary-red); }
+.hub textarea { min-height: 90px; resize: vertical; line-height: 1.4; }
+.hub input[type="date"] { color-scheme: dark; }
+
+/* Tabs: Materials Request / Feedback & Attendance */
+.hub .tabs { display: flex; gap: 10px; margin-bottom: 25px; }
+.hub .tab {
+  flex: 1;
+  padding: 14px 10px;
+  border: 1px solid var(--border-dark);
+  border-radius: 6px;
+  background: var(--darker-bg);
+  color: var(--silver);
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.hub .tab:hover { color: var(--white); border-color: #555; }
+.hub .tab[aria-selected="true"] { background: var(--primary-red); border-color: var(--primary-red); color: var(--white); }
+
+/* Attendance name rows */
+.hub .name-row { display: flex; gap: 10px; margin-bottom: 10px; }
+.hub .name-row input { flex: 1; }
+.hub .hint { font-weight: normal; color: #888; font-size: 13px; }
+
+/* Experiment cards */
+.hub .experiment-card {
+  background: var(--darker-bg);
+  border: 1px solid var(--border-dark);
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+.hub .experiment-header { display: flex; align-items: center; margin-bottom: 15px; gap: 10px; }
+.hub .experiment-header input { flex-grow: 1; border-left: 3px solid var(--primary-red); }
+
+/* Material rows */
+.hub .material-row { display: flex; gap: 10px; margin-bottom: 10px; }
+.hub .mat-name, .hub .mat-notes { flex: 2; }
+.hub .mat-qty { flex: 1; }
+
+/* Buttons */
+.hbtn {
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: inherit;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.hbtn-add {
+  background-color: #222222;
+  color: var(--silver);
+  border: 1px solid var(--border-dark);
+  width: 100%;
+  margin-top: 5px;
+}
+.hbtn-add:hover { background-color: #333333; color: var(--white); }
+
+.hbtn-add-exp {
+  background-color: transparent;
+  color: var(--primary-red);
+  border: 1px dashed var(--primary-red);
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+.hbtn-add-exp:hover { background-color: rgba(211, 17, 69, 0.1); }
+
+.hbtn-remove {
+  background-color: transparent;
+  color: var(--error);
+  border: 1px solid var(--error);
+  min-width: 40px;
+}
+.hbtn-remove:hover { background-color: rgba(255, 77, 77, 0.1); }
+
+.hbtn-submit {
+  background-color: var(--primary-red);
+  color: var(--white);
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  margin-top: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.hbtn-submit:hover { background-color: #a80d35; transform: translateY(-2px); }
+.hbtn-submit:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+.hub .status {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+}
+.hub .status:empty { display: none; }
+.hub .status.ok { background-color: rgba(21, 87, 36, 0.2); color: #75b798; }
+.hub .status.err { background-color: rgba(114, 28, 36, 0.2); color: #ea868f; }
+
+.hub .summary {
+  margin-top: 15px;
+  padding: 15px 20px;
+  border: 1px solid var(--border-dark);
+  border-left: 3px solid #75b798;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.hub .summary h3 { margin: 0 0 10px; font-size: 15px; color: var(--white); }
+.hub .summary ul { margin: 0 0 10px; padding-left: 20px; }
+.hub .summary ul ul { margin: 2px 0 0; color: var(--silver); }
+.hub .summary li { white-space: pre-line; }
+
+.hub [hidden] { display: none !important; }
+
+@media (max-width: 768px) {
+  /* Edge to edge on phones (cancels the page's 5% side padding) */
+  .hub { margin: 0 -5vw; padding: 20px 12px; border-radius: 0; box-shadow: none; }
+}
+
+@media (max-width: 600px) {
+  .hub .experiment-card { padding: 12px 10px; }
+  .hub .experiment-header { flex-direction: column; align-items: stretch; }
+  .hub .material-row {
+    flex-direction: column;
+    background-color: #1a1a1a;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border-dark);
+  }
+  .hub .material-row input { margin-bottom: 5px; }
+  .hub .material-row .hbtn-remove { width: 100%; margin-top: 5px; border-style: dashed; }
+}

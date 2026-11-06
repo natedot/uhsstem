@@ -12,6 +12,24 @@ function doGet() {
 }
 
 /**
+ * The Leaders Hub form on the website sends its requests here as JSON: { action, payload }.
+ * The website sends them without any Google sign-in, so whatever Google account a device is
+ * signed into can't block the form.
+ */
+function doPost(e) {
+  const handlers = { verifyPassword, processForm, submitFeedback };
+  let result;
+  try {
+    const request = JSON.parse(e.postData.contents);
+    result = handlers[request.action] ? handlers[request.action](request.payload) : "Error: Unknown request.";
+  } catch (error) {
+    result = "Error: " + error.toString();
+  }
+  return ContentService.createTextOutput(JSON.stringify({ result: result }))
+      .setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
  * Compares a password against the FORM_PASSWORD Script Property.
  * Set it in: Project Settings (gear icon) -> Script Properties.
  */
