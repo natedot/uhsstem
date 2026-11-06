@@ -21,21 +21,48 @@ if (hamburger && navMenu) {
 // The Apps Script form sends its height with postMessage whenever it changes.
 const formFrame = document.getElementById('form-frame');
 if (formFrame) {
+    const formUrl = formFrame.src;
+    const fallback = document.getElementById('form-fallback');
     let formLoaded = false;
+    let retried = false;
+    let checkTimer;
+
     window.addEventListener('message', e => {
         if (!/^https:\/\/[\w-]+\.googleusercontent\.com$/.test(e.origin)) return;
         if (e.data && e.data.type === 'uhs-form-height') {
             formLoaded = true;
+            fallback.classList.remove('is-alert');
             formFrame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 150), 6000) + 'px';
         }
     });
 
-    // Some devices block Google forms inside other pages (several Google accounts signed in, school
-    // Chromebook settings, Safari's cookie blocking). If the form hasn't loaded after 10 seconds,
-    // highlight the link that opens it in its own tab, which works on those devices.
-    setTimeout(() => {
-        if (!formLoaded) document.getElementById('form-fallback').classList.add('is-alert');
-    }, 10000);
+    // Load the form again from scratch (the extra ?r= makes sure the browser doesn't reuse an old copy)
+    function reloadForm() {
+        formLoaded = false;
+        formFrame.src = formUrl + (formUrl.includes('?') ? '&' : '?') + 'r=' + Date.now();
+        watchForm();
+    }
+
+    // If the form hasn't shown up after 8 seconds, try loading it once more. If it still doesn't load,
+    // the device is probably blocking Google forms inside other pages (several Google accounts signed in,
+    // school Chromebook settings, Safari's cookie blocking), so highlight the open-in-a-new-tab link.
+    function watchForm() {
+        clearTimeout(checkTimer);
+        checkTimer = setTimeout(() => {
+            if (formLoaded) return;
+            if (!retried) { retried = true; reloadForm(); }
+            else fallback.classList.add('is-alert');
+        }, 8000);
+    }
+    watchForm();
+
+    // A tab left open for a long time (or a phone that put the page to sleep) can come back with an empty
+    // form box. If the page was out of sight for over an hour, load the form fresh when it's seen again.
+    let hiddenAt = 0;
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) hiddenAt = Date.now();
+        else if (hiddenAt && Date.now() - hiddenAt > 60 * 60 * 1000) { retried = false; reloadForm(); }
+    });
 
     // Coming back with the Back button can show a frozen copy of the page: reload it so the form starts fresh
     window.addEventListener('pageshow', e => { if (e.persisted) location.reload(); });

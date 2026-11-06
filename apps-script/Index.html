@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* UHS STEM Academy Theme Variables */
+    :root {
+      --primary-red: #D31145;
+      --dark-bg: #000000;
+      --darker-bg: #111111;
+      --silver: #C0C0C0;
+      --text-light: #F5F5F5;
+      --white: #FFFFFF;
+      --border-dark: #333333;
+      --error: #ff4d4d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--darker-bg);
+      color: var(--text-light);
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      background: var(--dark-bg);
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+
+    .form-group { margin-bottom: 20px; }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: var(--silver);
+    }
+
+    select, input, textarea {
+      width: 100%;
+      padding: 10px;
+      background-color: var(--darker-bg);
+      color: var(--white);
+      border: 1px solid var(--border-dark);
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    select:focus, input:focus, textarea:focus { outline: none; border-color: var(--primary-red); }
+    textarea { min-height: 90px; resize: vertical; font-family: inherit; line-height: 1.4; }
+    input[type="date"] { color-scheme: dark; }
+
+    /* Tabs: Materials Request / Feedback & Attendance */
+    .tabs { display: flex; gap: 10px; margin-bottom: 25px; }
+    .tab {
+      flex: 1;
+      padding: 14px 10px;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      background: var(--darker-bg);
+      color: var(--silver);
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tab:hover { color: var(--white); border-color: #555; }
+    .tab[aria-selected="true"] { background: var(--primary-red); border-color: var(--primary-red); color: var(--white); }
+
+    /* Attendance name rows */
+    .name-row { display: flex; gap: 10px; margin-bottom: 10px; }
+    .name-row input { flex: 1; }
+    .hint { font-weight: normal; color: #888; font-size: 13px; }
+
+    /* Experiment cards */
+    .experiment-card {
+      background: var(--darker-bg);
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .experiment-header { display: flex; align-items: center; margin-bottom: 15px; gap: 10px; }
+    .experiment-header input { flex-grow: 1; border-left: 3px solid var(--primary-red); }
+
+    /* Material rows */
+    .material-row { display: flex; gap: 10px; margin-bottom: 10px; }
+    .mat-name, .mat-notes { flex: 2; }
+    .mat-qty { flex: 1; }
+
+    /* Buttons */
+    .btn {
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-add-mat {
+      background-color: #222222;
+      color: var(--silver);
+      border: 1px solid var(--border-dark);
+      width: 100%;
+      margin-top: 5px;
+    }
+    .btn-add-mat:hover { background-color: #333333; color: var(--white); }
+
+    .btn-add-exp {
+      background-color: transparent;
+      color: var(--primary-red);
+      border: 1px dashed var(--primary-red);
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    .btn-add-exp:hover { background-color: rgba(211, 17, 69, 0.1); }
+
+    .btn-remove {
+      background-color: transparent;
+      color: var(--error);
+      border: 1px solid var(--error);
+      min-width: 40px;
+    }
+    .btn-remove:hover { background-color: rgba(255, 77, 77, 0.1); }
+
+    .btn-submit {
+      background-color: var(--primary-red);
+      color: white;
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .btn-submit:hover { background-color: #a80d35; transform: translateY(-2px); }
+    .btn-submit:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+    .status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .status:empty { display: none; }
+    .status.ok { background-color: rgba(21, 87, 36, 0.2); color: #75b798; }
+    .status.err { background-color: rgba(114, 28, 36, 0.2); color: #ea868f; }
+
+    .summary {
+      margin-top: 15px;
+      padding: 15px 20px;
+      border: 1px solid var(--border-dark);
+      border-left: 3px solid #75b798;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .summary h3 { margin: 0 0 10px; font-size: 15px; color: var(--white); }
+    .summary ul { margin: 0 0 10px; padding-left: 20px; }
+    .summary ul ul { margin: 2px 0 0; color: var(--silver); }
+    .summary li { white-space: pre-line; }
+
+    [hidden] { display: none !important; }
+
+    /* --- MOBILE RESPONSIVE STYLES --- */
+    @media (max-width: 600px) {
+      body { padding: 0; }
+      .container { padding: 20px 12px; border-radius: 0; box-shadow: none; }
+      .experiment-card { padding: 12px 10px; }
+      .experiment-header { flex-direction: column; align-items: stretch; }
+      .material-row {
+        flex-direction: column;
+        background-color: #1a1a1a;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid var(--border-dark);
+      }
+      .material-row input { margin-bottom: 5px; }
+      .material-row .btn-remove { width: 100%; margin-top: 5px; border-style: dashed; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Password lock screen (shown first) -->
+  <form id="lockScreen">
+    <div class="form-group">
+      <label for="pwInput">Leader Password</label>
+      <input type="password" id="pwInput" placeholder="Enter leader password" autocomplete="current-password" required>
+    </div>
+    <button type="submit" class="btn btn-submit" id="unlockBtn">Unlock</button>
+    <div id="lockStatus" class="status err"></div>
+  </form>
+
+  <!-- Leaders Hub (hidden until unlocked) -->
+  <div id="hub" hidden>
+    <div class="tabs" role="tablist">
+      <button type="button" class="tab" role="tab" data-panel="materialsPanel" aria-selected="true">📦 Materials Request</button>
+      <button type="button" class="tab" role="tab" data-panel="feedbackPanel" aria-selected="false">📝 Feedback / Attendance</button>
+    </div>
+
+    <!-- Materials request -->
+    <section id="materialsPanel" role="tabpanel">
+      <form id="requestForm">
+        <div class="form-group">
+          <label for="schoolName">Select Elementary School</label>
+          <select id="schoolName" name="schoolName" class="school-select" required></select>
+        </div>
+
+        <div id="experimentsContainer"></div>
+
+        <button type="button" class="btn btn-add-exp" id="addExpBtn">+ Add Another Experiment</button>
+        <button type="submit" class="btn btn-submit" id="submitBtn">Submit Entire Request</button>
+      </form>
+
+      <div id="status" class="status"></div>
+      <div id="summary" class="summary" hidden></div>
+    </section>
+
+    <!-- Feedback / attendance (fill out after each session) -->
+    <section id="feedbackPanel" role="tabpanel" hidden>
+      <form id="feedbackForm">
+        <div class="form-group">
+          <label for="fbSchool">Elementary School</label>
+          <select id="fbSchool" name="schoolName" class="school-select" required></select>
+        </div>
+
+        <div class="form-group">
+          <label for="fbDate">Session Date</label>
+          <input type="date" id="fbDate" name="sessionDate" required>
+        </div>
+
+        <div class="form-group">
+          <label>Attendance <span class="hint">(full name of everyone who helped at this session)</span></label>
+          <div id="namesList"></div>
+          <button type="button" class="btn btn-add-mat" id="addNameBtn">+ Add Person</button>
+        </div>
+
+        <div class="form-group">
+          <label for="fbWell">What went well?</label>
+          <textarea id="fbWell" name="wentWell" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="fbBad">What didn't go well?</label>
+          <textarea id="fbBad" name="didntGoWell" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="fbImprove">How can we improve?</label>
+          <textarea id="fbImprove" name="improve" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-submit" id="fbSubmitBtn">Submit Feedback</button>
+      </form>
+
+      <div id="fbStatus" class="status"></div>
+      <div id="fbSummary" class="summary" hidden></div>
+    </section>
+  </div>
+</div>
+
+<!-- Templates: one copy of the markup, cloned by addExperiment()/addMaterial() -->
+<template id="materialTemplate">
+  <div class="material-row">
+    <input type="text" class="mat-name" placeholder="Material Name" required>
+    <input type="text" class="mat-qty" placeholder="Qty (e.g., 2 boxes)" required>
+    <input type="text" class="mat-notes" placeholder="Notes / Links (Optional)">
+    <button type="button" class="btn btn-remove" data-action="remove-row">X</button>
+  </div>
+</template>
+
+<template id="nameTemplate">
+  <div class="name-row">
+    <input type="text" class="person-name" placeholder="First and last name" autocomplete="off" required>
+    <button type="button" class="btn btn-remove" data-action="remove-name">X</button>
+  </div>
+</template>
+
+<template id="experimentTemplate">
+  <div class="experiment-card">
+    <div class="experiment-header">
+      <input type="text" class="exp-name" placeholder="Experiment Name (e.g., Slime)" required>
+      <button type="button" class="btn btn-remove" data-action="remove-card">X</button>
+    </div>
+    <div class="materials-list">
+      <label>Materials Needed for this Experiment:</label>
+    </div>
+    <button type="button" class="btn btn-add-mat" data-action="add-material">+ Add Material to this Experiment</button>
+  </div>
+</template>
+
+<script>
+  // Schools shown in both dropdowns. The value must match the school's tab name in the sheet exactly.
+  var SCHOOLS = [
+    ["Sifton", "Sifton"],
+    ["Emerald", "Emerald"],
+    ["Mill Plain k-2 ", "Mill Plain K-2"],
+    ["Mill Plain 3-5", "Mill Plain 3-5"],
+    ["CV", "CV"],
+    ["Pioneer", "Pioneer"],
+    ["Harmony 3-5", "Harmony 3-5"],
+    ["Har K-2", "Har K-2"],
+    ["Illahee Orr", "Illahee Orr"],
+    ["Illahee Boehi", "Illahee Boehi"],
+    ["Burnt Bridge Creek", "Burnt Bridge Creek"],
+    ["Spanish STEM", "Spanish STEM"]
+  ];
+
+  var leaderPassword = ""; // Sent with every submission so the server can re-check it
+  var experimentsContainer = document.getElementById('experimentsContainer');
+
+  function clone(id) {
+    return document.getElementById(id).content.firstElementChild.cloneNode(true);
+  }
+
+  function addMaterial(card) {
+    card.querySelector('.materials-list').appendChild(clone('materialTemplate'));
+  }
+
+  function addExperiment() {
+    var card = clone('experimentTemplate');
+    addMaterial(card);
+    experimentsContainer.appendChild(card);
+  }
+
+  function setStatus(el, ok, message) {
+    el.className = 'status ' + (ok ? 'ok' : 'err');
+    el.textContent = message;
+  }
+
+  // --- Unlock screen ---
+  document.getElementById('lockScreen').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var pw = document.getElementById('pwInput').value;
+    var btn = document.getElementById('unlockBtn');
+    var lockStatus = document.getElementById('lockStatus');
+    var done = function() { btn.disabled = false; btn.textContent = "Unlock"; };
+
+    btn.disabled = true;
+    btn.textContent = "Checking...";
+    lockStatus.textContent = "";
+
+    google.script.run
+      .withSuccessHandler(function(ok) {
+        done();
+        if (ok) {
+          leaderPassword = pw;
+          document.getElementById('lockScreen').hidden = true;
+          document.getElementById('hub').hidden = false;
+        } else {
+          setStatus(lockStatus, false, "Incorrect password.");
+          document.getElementById('pwInput').select();
+        }
+      })
+      .withFailureHandler(function(err) { done(); setStatus(lockStatus, false, "Error: " + err.message); })
+      .verifyPassword(pw);
+  });
+
+  // --- Add / remove buttons (one listener handles every card and row) ---
+  document.getElementById('addExpBtn').addEventListener('click', addExperiment);
+
+  experimentsContainer.addEventListener('click', function(e) {
+    var action = e.target.dataset.action;
+    var card = e.target.closest('.experiment-card');
+    if (action === 'add-material') {
+      addMaterial(card);
+    } else if (action === 'remove-row') {
+      if (card.querySelectorAll('.material-row').length > 1) e.target.parentElement.remove();
+      else alert("Each experiment needs at least one material!");
+    } else if (action === 'remove-card') {
+      if (experimentsContainer.children.length > 1) card.remove();
+      else alert("You must request materials for at least one experiment!");
+    }
+  });
+
+  // --- Enter key: never submits by accident ---
+  // In an experiment name it jumps to the first material; in a material row it adds a new row.
+  document.getElementById('requestForm').addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter' || e.target.tagName !== 'INPUT') return;
+    e.preventDefault();
+    var card = e.target.closest('.experiment-card');
+    if (!card) return;
+    if (e.target.classList.contains('exp-name')) {
+      card.querySelector('.mat-name').focus();
+    } else {
+      addMaterial(card);
+      var names = card.querySelectorAll('.mat-name');
+      names[names.length - 1].focus();
+    }
+  });
+
+  // Shows exactly what was sent, so the leader can double-check it.
+  // `items` is a list of [heading, [detail lines]].
+  function showSummary(boxId, title, items) {
+    var box = document.getElementById(boxId);
+    box.innerHTML = "";
+    var h = document.createElement('h3');
+    h.textContent = title;
+    var list = document.createElement('ul');
+    items.forEach(function(item) {
+      var li = document.createElement('li');
+      li.textContent = item[0];
+      var sub = document.createElement('ul');
+      item[1].forEach(function(line) {
+        var subLi = document.createElement('li');
+        subLi.textContent = line;
+        sub.appendChild(subLi);
+      });
+      li.appendChild(sub);
+      list.appendChild(li);
+    });
+    box.append(h, list);
+    box.hidden = false;
+  }
+
+  // --- Submit ---
+  document.getElementById('requestForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    var btn = document.getElementById('submitBtn');
+    var status = document.getElementById('status');
+    var done = function() { btn.disabled = false; btn.textContent = "Submit Entire Request"; };
+
+    btn.disabled = true;
+    btn.textContent = "Processing...";
+    document.getElementById('summary').hidden = true;
+
+    var payload = {
+      schoolName: form.schoolName.value,
+      password: leaderPassword,
+      experiments: Array.from(experimentsContainer.children).map(function(card) {
+        return {
+          name: card.querySelector('.exp-name').value,
+          materials: Array.from(card.querySelectorAll('.material-row')).map(function(row) {
+            return {
+              name: row.querySelector('.mat-name').value,
+              qty: row.querySelector('.mat-qty').value,
+              notes: row.querySelector('.mat-notes').value
+            };
+          })
+        };
+      })
+    };
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        done();
+        if (res === "Success") {
+          setStatus(status, true, "Success! Data sorted into the spreadsheet.");
+          showSummary('summary', "Submitted for " + payload.schoolName + ":", payload.experiments.map(function(exp) {
+            return [exp.name, exp.materials.filter(function(m) { return m.name.trim(); }).map(function(m) {
+              return m.name + " — " + m.qty + (m.notes ? " (" + m.notes + ")" : "");
+            })];
+          }));
+          // Start fresh: clear the school and go back to one empty experiment
+          form.reset();
+          experimentsContainer.innerHTML = "";
+          addExperiment();
+        } else {
+          setStatus(status, false, res);
+        }
+      })
+      .withFailureHandler(function(err) { done(); setStatus(status, false, "Error: " + err.message); })
+      .processForm(payload);
+  });
+
+  // --- Tabs ---
+  document.querySelectorAll('.tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.tab').forEach(function(t) {
+        var selected = t === tab;
+        t.setAttribute('aria-selected', selected);
+        document.getElementById(t.dataset.panel).hidden = !selected;
+      });
+    });
+  });
+
+  // --- Feedback / attendance form ---
+  var namesList = document.getElementById('namesList');
+
+  function addName() {
+    var row = clone('nameTemplate');
+    namesList.appendChild(row);
+    return row.querySelector('input');
+  }
+
+  function todayString() {
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  function resetFeedbackForm() {
+    document.getElementById('feedbackForm').reset();
+    document.getElementById('fbDate').value = todayString();
+    namesList.innerHTML = "";
+    addName();
+  }
+
+  document.getElementById('addNameBtn').addEventListener('click', function() { addName().focus(); });
+
+  namesList.addEventListener('click', function(e) {
+    if (e.target.dataset.action !== 'remove-name') return;
+    if (namesList.children.length > 1) e.target.parentElement.remove();
+    else alert("Please list at least one person!");
+  });
+
+  // Enter in a name box adds the next person instead of submitting
+  document.getElementById('feedbackForm').addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter' || e.target.tagName !== 'INPUT') return;
+    e.preventDefault();
+    if (e.target.classList.contains('person-name')) addName().focus();
+  });
+
+  document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    var btn = document.getElementById('fbSubmitBtn');
+    var status = document.getElementById('fbStatus');
+    var done = function() { btn.disabled = false; btn.textContent = "Submit Feedback"; };
+
+    btn.disabled = true;
+    btn.textContent = "Processing...";
+    document.getElementById('fbSummary').hidden = true;
+
+    var payload = {
+      password: leaderPassword,
+      schoolName: form.schoolName.value,
+      sessionDate: form.sessionDate.value,
+      attendees: Array.from(namesList.querySelectorAll('.person-name')).map(function(i) { return i.value; }),
+      wentWell: form.wentWell.value,
+      didntGoWell: form.didntGoWell.value,
+      improve: form.improve.value
+    };
+
+    google.script.run
+      .withSuccessHandler(function(res) {
+        done();
+        if (res === "Success") {
+          setStatus(status, true, "Thank you! Feedback saved to the spreadsheet.");
+          var names = payload.attendees.filter(function(n) { return n.trim(); });
+          showSummary('fbSummary', "Feedback for " + payload.schoolName + " (" + payload.sessionDate + "):", [
+            ["Attendance (" + names.length + ")", names],
+            ["What went well", [payload.wentWell]],
+            ["What didn't go well", [payload.didntGoWell]],
+            ["How can we improve", [payload.improve]]
+          ]);
+          resetFeedbackForm();
+        } else {
+          setStatus(status, false, res);
+        }
+      })
+      .withFailureHandler(function(err) { done(); setStatus(status, false, "Error: " + err.message); })
+      .submitFeedback(payload);
+  });
+
+  // --- Start-up ---
+  document.querySelectorAll('.school-select').forEach(function(select) {
+    select.innerHTML = '<option value="" disabled selected>Select a location...</option>';
+    SCHOOLS.forEach(function(school) { select.add(new Option(school[1], school[0])); });
+  });
+  resetFeedbackForm();
+  addExperiment(); // Start with one experiment card
+
+  // --- Auto-size: tell the Leaders Hub page how tall this form is whenever it changes ---
+  function postHeight() {
+    window.top.postMessage({ type: 'uhs-form-height', height: Math.ceil(document.body.getBoundingClientRect().height) }, '*');
+  }
+  new ResizeObserver(postHeight).observe(document.body);
+</script>
+
+</body>
+</html>

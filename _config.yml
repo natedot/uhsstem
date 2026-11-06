@@ -1,0 +1,3 @@
+# GitHub Pages: don't publish the Apps Script source as pages on the website
+exclude:
+  - apps-script
