@@ -21,12 +21,24 @@ if (hamburger && navMenu) {
 // The Apps Script form sends its height with postMessage whenever it changes.
 const formFrame = document.getElementById('form-frame');
 if (formFrame) {
+    let formLoaded = false;
     window.addEventListener('message', e => {
         if (!/^https:\/\/[\w-]+\.googleusercontent\.com$/.test(e.origin)) return;
         if (e.data && e.data.type === 'uhs-form-height') {
+            formLoaded = true;
             formFrame.style.height = Math.min(Math.max(Number(e.data.height) || 0, 150), 6000) + 'px';
         }
     });
+
+    // Some devices block Google forms inside other pages (several Google accounts signed in, school
+    // Chromebook settings, Safari's cookie blocking). If the form hasn't loaded after 10 seconds,
+    // highlight the link that opens it in its own tab, which works on those devices.
+    setTimeout(() => {
+        if (!formLoaded) document.getElementById('form-fallback').classList.add('is-alert');
+    }, 10000);
+
+    // Coming back with the Back button can show a frozen copy of the page: reload it so the form starts fresh
+    window.addEventListener('pageshow', e => { if (e.persisted) location.reload(); });
 }
 
 // Leaders Hub: Full Screen button makes the form cover the whole screen.
